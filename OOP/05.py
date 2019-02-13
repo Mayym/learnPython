@@ -27,7 +27,7 @@ class Teacher(Person):
         # 扩充父类的功能只需要调用父类相应的函数
         # 方法一：Person.work(self)
         # 方法二：super代表得到父类
-        super().work()
+        super().work()  # super(Teacher, self).work()
         self.make_test()
 
 
