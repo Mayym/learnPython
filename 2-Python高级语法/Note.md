@@ -329,17 +329,157 @@
 - datetime常见属性
     - datetime.date: 一个理想和的日期，提供year, month, day属性
     - datetime.time: 提供一个理想和的时间，具有hour, minute, sec, microsec等内容
+    - datetime.timedelta: 提供一个时间差，时间长度
     - datetime.datetime: 提供日期跟时间的组合
-        - from datetime import datetime 该语句后可直接使用datetime
+        - 案例 6-3-1.py
+        - from datetime import datetime 该语句后可直接使用datetime下的datetime类
+        - 提供比较好用的时间而已
         - 常用类方法：
             - today
             - now
             - utcnow
             - fromtimestamp: 从时间戳返回本地时间
-    - datetime.timedelta: 提供一个时间差，时间长度
+        - 类定义
+            
+                class datetime.datetime(year, month, day[, hour
+                        [, minute
+                        [, second
+                        [, microsecond
+                        [, tzinfo]]]]])
+                        
+                The year, month and day arguments are required.
+                MINYEAR <= year <= MAXYEAR
+                1 <= month <= 12
+                1 <= day <= n
+                0 <= hour < 24
+                0 <= minute < 60
+                0 <= second < 60
+                0 <= microsecond < 10**
+        
+        - 类方法
+        
+                datetime.today(): 返回当前本地datetime。随着 tzinfo None, 这个等同于datetime.fromtimestamp(time.time())
+                datetime.now([tz]): 返回当前本地日期和时间，如果可选参数tz为None或没有详细说明，这个方法会像today()
+                datetime.utcnow(): 返回当前的UTC日期和时间，如果 tzinfo None, 那么与now()类似。
+                datetime.fromtimestamp(timestamp[, tz]): 根据时间戳返回本地的日期和时间，tz指定时区
+                datetime.utcfromtimestamp(timestamp): 根据时间戳返回 UTC datetime.
+                datetime.fromordinal(ordinal): 根据 Gregorian ordinal 返回datetime.
+                datetime.combine(date, time): 根据date和time返回一个新的datetime.
+                datetime.strptime(date_string, format): 根据date_string和format返回一个datetime.
+                
+        - 实例方法
+        
+                datetime.date(): 返回相同年月日的date对象
+                datetime.time(): 返回相同时分秒微妙的time对象
+                datetime.replace(kw): kw in [year, month, day, hour, minute, second, microsecond, tzinfo]， 与date类似。
+                
+        - 类属性
+        
+                datetime.min: datetime(MINYEAR, 1, 1).
+                datetime.max: datetime(MAXYEAR, 12, 31, 23, 59, 59, 999999).
+                
+        - 实例属性（read-only）
+        
+                datetime.year: 1~9999
+                datetime.month: 1~12
+                datetime.day: 1~n
+                datetime.hour: In range(24). 0~23
+                datetime.minute: In range(60).
+                datetime.second: In range(60).
+                datetime.microsecond: In range(1000000).
+    
     
 ## 6.4 timeit模块
 - timeit-时间测量工具
 - 案例 6-4.py
     - 6-4-1.py： 测量程序运行时间间隔实验
     - 6-4-2.py： 生成列表两种方法的比较
+    
+## 6.5 os模块
+- 跟操作系统相关，主要是文件操作
+- 与操作系统相关的操作，主要包含在三个模块里
+    - os，操作系统目录相关
+    - os.path，系统路径相关操作
+    - shutil，高级文件操作，目录树的操作，文件赋值、删除、移动
+- 路径：
+    - 绝对路径：总是从根目录上开始
+    - 相对路径：基本以当前环境为开始的一个相对的地方
+- os模块函数（案例 6-5.py）
+    - getcwd(): 获取当前的工作目录
+    - chdir(): 改变当前的工作目录
+    - listdir(): 获取一个目录中所有子目录和文件的名称列表
+    - makedirs(): 递归创建文件夹
+    - system(): 运行系统shell命令
+    - getenv(): 获取指定的系统环境变量值
+    - putenv(): 添加环境变量值
+    - exit(): 退出当前程序
+- os模块值部分
+    - os.curdir: current dir，当前目录
+    - os.pardir: parent dir，父亲目录
+    - os.sep: 当前系统的路径分隔符
+        - windows: \
+        - linux: /
+    - os.linesep: 当前系统的换行符号
+        - windows: \r\n
+        - unix, linux, macos: \n
+    - os.name: 当前系统名称
+        - windows: nt
+        - mac, unix, linux: posix
+- 在路径相关的操作中，不要手动拼写地址，因为手动拼写的路径可能不具有移植性
+
+## 6.6 os.path模块
+- 跟路径相关的模块
+- 案例 6-6.py
+- os.path模块
+    - abspath(): 将路径转化为绝对路径
+        - absolute 绝对的
+    - basename(): 获取路径中的文件名部分（最后一个文件夹名）
+    - join(): 将多个路径拼合成一个路径
+    - split(): 将路径切割为文件夹部分和当前文件部分
+    - isdir(): 检测是否是目录
+    - exists(): 检测文件或者目录是否存在
+
+## 6.7 shutil模块
+- 跟操作文件相关的模块
+- 案例 6-7.py
+- 归档和压缩
+    - 归档： 把多个文件或者文件夹合并到一个文件当中
+    - 压缩： 用算法把多个文件或者文件夹无损或者有损合并到一个文件当中
+        - 有损： 如图片、视频的清晰度降低
+- shutil模块
+    - copy(): 复制文件
+    - copy2(): 复制文件，保留元数据（文件信息：比如创建时间、所有者、权限等）
+    - copyfile(): 将一个文件中的内容复制到另外一个文件当中
+    - make_archive(): 归档操作
+        - 'format' is the archive format: one of "zip", "tar", "gztar",
+            "bztar", or "xztar".  Or any other registered format.
+        - unpack_archive(): 解包操作
+        
+## 6.8 zipfile模块
+- zip-压缩包
+- 案例 6-8.py
+- [详解Python3中zipfile模块用法](https://www.jb51.net/article/142155.htm)
+- zipfile.ZipFile类
+    - class zipfile.ZipFile(file[, mode[, compression[, allowZip64]]])
+        - 创建一个ZipFile对象，表示一个zip文件。
+        - 参数file表示文件的路径或类文件对象(file-like object)；
+        - 参数mode指示打开zip文件的模式，默认值为'r'，表示读已经存在的zip文件，也可以为'w'或'a'，
+            'w'表示新建一个zip文档或覆盖一个已经存在的zip文档，
+            'a'表示将数据附加到一个现存的zip文档中
+        - 参数compression表示在写zip文档时使用的压缩方法，它的值可以是zipfile. ZIP_STORED 或zipfile. ZIP_DEFLATED。
+            如果要操作的zip文件大小超过2G，应该将allowZip64设置为True。
+    - ZipFile.getinfo(name): 获取zip文档内指定文件的信息。
+    - ZipFile.namelist(): 获取zip文档内所有文件的名称列表。
+    - ZipFile.extractall([path[, members[, pwd]]]): 解压zip文档中的所有文件到当前目录。
+        - 参数members的默认值为zip文档内的所有文件名称列表，也可以自己设置，选择要解压的文件名称。
+        
+## 6.9 random模块
+- 案例 6-9.py
+- 随机数
+- 所有的随机模块都是伪随机
+- random模块
+    - random.random(): 获取0-1之间的随机小数
+    - random.choice(): 随机返回序列中的某个值
+    - random.shuffle(): 随机打乱列表
+    - random.randint(a, b): 随机生成[a, b]之间的整数
+    
