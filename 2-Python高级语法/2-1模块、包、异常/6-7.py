@@ -21,7 +21,7 @@ print(rst)
 # 格式： shutil.copyfile('源路径', '目标路径')
 # 返回值： 目标路径
 """
-rst = shutil.copyfile("6-6.py", "test.py")
+rst = shutil.copyfile("6-6.py", "1-2-1(1).py")
 print(rst)
 """
 
@@ -30,7 +30,7 @@ print(rst)
 # 格式： shutil.move(源路径， 目标路径)
 # 返回值： 目标路径
 """
-rst = shutil.move("C:\\Users\\15MR\MAY\learnPython\\2-Python高级语法\\test.py", 
+rst = shutil.move("C:\\Users\\15MR\MAY\learnPython\\2-Python高级语法\\1-2-1(1).py", 
                   "C:\\Users\\15MR\MAY\learnPython\\2-Python高级语法\pkg01")
 print(rst)
 """
